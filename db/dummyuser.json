@@ -1,0 +1,82 @@
+[
+  {
+    "id": "2e13eb9e-c59c-4ca9-a36d-fb753c4bcfe4",
+    "fullName": "John Doe",
+    "username": "johndoe",
+    "email": "john.doe@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "d6332ef9-3907-4377-bff0-5a92e10fc552",
+    "fullName": "Jane Smith",
+    "username": "janesmith",
+    "email": "jane.smith@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "bdbec89e-0376-4202-ad91-42366c135a86",
+    "fullName": "Alice Brown",
+    "username": "alicebrown",
+    "email": "alice.brown@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "d68b3df6-a188-41c1-9a0a-c0ce7797b304",
+    "fullName": "Bob Johnson",
+    "username": "bobjohnson",
+    "email": "bob.johnson@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "213deebd-a741-4328-9996-becb28a81fef",
+    "fullName": "Charlie White",
+    "username": "charliewhite",
+    "email": "charlie.white@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "3e33e404-f8be-4dee-8973-2408240d8142",
+    "fullName": "Admin One",
+    "username": "adminone",
+    "email": "admin1@example.com",
+    "role": "admin",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "bea33ccd-0a76-4bc0-bb64-41bed9fb1c55",
+    "fullName": "Admin Two",
+    "username": "admintwo",
+    "email": "admin2@example.com",
+    "role": "admin",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "17e38b0f-82a0-43f6-9377-ddcd2994a898",
+    "fullName": "Admin Three",
+    "username": "adminthree",
+    "email": "admin3@example.com",
+    "role": "admin",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "e0799d89-025a-47f3-945f-0d5ea45eabd4",
+    "fullName": "Metal Human",
+    "username": "metalhuman",
+    "email": "superuser@example.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  },
+  {
+    "id": "04c6b85e-7b0c-43a7-9502-3321c059bcab",
+    "fullName": "David Green",
+    "username": "davidgreen",
+    "email": "david.green@gmail.com",
+    "role": "user",
+    "createdAt": "2025-06-06T00:00:00.000Z"
+  }
+]
