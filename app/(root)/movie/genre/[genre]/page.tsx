@@ -9,10 +9,6 @@ const GenreMoviesPage = async ({
 }) => {
   const genre = (await params)?.genre.replace("-", " ");
 
-  // decodeURIComponent(params.genre).replace("-", " ");
-
-  console.log("🔍 Genre received:", genre);
-
   const movies = await getMoviesByGenre({ genres: genre });
 
   if (!movies || movies.length === 0) {

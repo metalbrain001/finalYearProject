@@ -11,7 +11,7 @@ export const SearchMovieCard = ({
 }: any) => {
   return (
     <Link
-      href={`/movies/${movie_id}`}
+      href={`/movie/${movie_id}`}
       className="flex flex-col items-start hover:shadow-lg transition-shadow duration-200"
     >
       <div className="flex flex-col rounded-lg">

@@ -33,3 +33,16 @@ export const movieSchema = z.object({
   Description: z.string().trim().min(3).max(500),
   PosterColor: z.string().nonempty(),
 });
+
+export const castSchema = z.object({
+  name: z.string().trim().min(3).max(50),
+  character: z.string().trim().min(3).max(50),
+  profile_path: z.string().trim().nonempty(),
+});
+
+export const myAccountSchema = z.object({
+  fullName: z.string(),
+  email: z.string().email(),
+  password: z.string().min(6).optional(),
+  role: z.string().min(3).optional(),
+});

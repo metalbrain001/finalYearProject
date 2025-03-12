@@ -21,20 +21,19 @@ export const createMovie = async (params: MovieParams) => {
           director: params.director,
           movie_plot: params.movie_plot,
           posterUrl: params.poster_url,
-          movie_url: params.movie_url, // ✅ Fixed camelCase match
-          movieRuntime: params.movie_runtime, // ✅ Fixed camelCase match
+          movie_url: params.movie_url,
+          movieRuntime: params.movie_runtime,
           actors: params.actors,
           description: params.description,
           status: "pending",
-          userId: params.userId, // ✅ Fixed user_id → userId
-          createdAt: new Date(), // ✅ Fixed created_at → createdAt
+          userId: params.userId,
+          createdAt: new Date(),
         })
-        .returning({ id: userUploadedMovies.id }); // ✅ Corrected returning syntax
+        .returning({ id: userUploadedMovies.id });
 
-      const movieId = newMovie.id; // ✅ Get inserted movie ID
+      const movieId = newMovie.id;
       console.log(`✅ Movie inserted with ID: ${movieId}`);
 
-      // ✅ Step 2: Insert cast members into `movie_cast` (if provided)
       if (params.cast.length > 0) {
         await tx.insert(movieCast).values(
           params.cast.map((member) => ({
@@ -50,7 +49,7 @@ export const createMovie = async (params: MovieParams) => {
     return {
       success: true,
       message: "Movie created successfully.",
-      data: JSON.parse(JSON.stringify(params)), // ✅ Return the input params
+      data: JSON.parse(JSON.stringify(params)),
     };
   } catch (error) {
     console.error("🚨 Movie creation error:", error);

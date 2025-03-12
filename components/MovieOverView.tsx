@@ -8,9 +8,12 @@ import useMovieTrailer from "@/hooks/use-gettrailer";
 import BudgetDisplay from "./BudgetDisplay";
 import CastList from "./CastList";
 import useMovieCast from "@/hooks/use-getcast";
+import RentMoviebtn from "./RentMoviebtn";
+import { useSession } from "next-auth/react";
 
 const MovieOverView = () => {
   const { id } = useParams();
+  const { data: session } = useSession();
   const { movieDetails, loading, error } = useGetMovieById(String(id));
   const { CalendarDays, Ban, Baby, Ghost } = Icons();
   const { trailer, loading: trailerLoading } = useMovieTrailer(String(id));
@@ -36,6 +39,7 @@ const MovieOverView = () => {
               className="w-[100%] h-[80%] rounded-lg object-cover shadow-lg"
             />
           )}
+          {/* ✅ Rent Movie button */}
         </div>
 
         {/* ✅ Right Side: Movie Metadata */}
@@ -154,6 +158,38 @@ const MovieOverView = () => {
           <p className="text-gray-300 font-poppins mt-2">
             {movieDetails?.overview}
           </p>
+          {/* ✅ Rent Movie Button (Pass Props) */}
+          {session?.user?.id && (
+            <RentMoviebtn
+              movie_id={Number(movieDetails?.id)}
+              user_id={session.user.id} // 🔹 Pass userId dynamically
+              movie_title={movieDetails?.title || ""}
+              poster_url={`https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`}
+              tmdbId={movieDetails?.id || 0}
+              genres={
+                movieDetails?.genres.map((genre) => ({
+                  id: genre.id,
+                  name: genre.name,
+                })) || []
+              }
+              origin_countries={
+                movieDetails?.production_countries
+                  ?.map((country) => country.name)
+                  .join(", ") || ""
+              }
+              original_language={movieDetails?.original_language || ""}
+              tagline={movieDetails?.tagline || ""}
+              production_countries={movieDetails?.production_countries || []}
+              production_companies={
+                movieDetails?.production_companies?.map((company) => ({
+                  id: company.id,
+                  logo_path: company.logo_path,
+                  name: company.name,
+                  origin_country: company.origin_country,
+                })) || []
+              }
+            />
+          )}
         </div>
         <div className="items-center gap-2">
           <h2 className="text-3xl font-semibold text-slate-400">Cast</h2>

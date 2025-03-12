@@ -37,6 +37,14 @@ export async function middleware(
   return res;
 }
 
+export async function checkRateLimit() {
+  const ip = (await headers()).get("x-real-ip") || "127.0.0.1";
+  console.log("🚦 Checking rate limit for IP:", ip);
+
+  const result = await ratelimit.limit(ip);
+  return result;
+}
+
 const config = {
   matcher: "/api",
 };

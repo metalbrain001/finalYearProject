@@ -11,7 +11,7 @@ const TrailerServer = async ({ movieId }: TrailerServerProps) => {
   );
   const trailer = await fetchTrailer({ movieId });
 
-  return <Trailer trailer={trailer} />;
+  return <Trailer />;
 };
 
 export default TrailerServer;

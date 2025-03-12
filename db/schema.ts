@@ -1,3 +1,4 @@
+import { desc } from "drizzle-orm";
 import {
   integer,
   varchar,
@@ -14,7 +15,9 @@ import {
   bigint,
   unique,
   index, // FIXED: Added numeric type
+  vector,
 } from "drizzle-orm/pg-core";
+import { stat } from "fs";
 
 export const ROLE_ENUM = pgEnum("role", ["user", "admin", "superadmin"]);
 
@@ -58,7 +61,10 @@ export const coreMovie = pgTable("core_movie", {
     onDelete: "cascade",
     onUpdate: "cascade"
   }),
-  posterUrl: varchar("poster_url", { length: 200 })
+  description: text("description"),
+  posterUrl: varchar("poster_url", { length: 200 }),
+  status: varchar("status", { length: 20 }).default("available"),
+  embedding: vector("embedding", { dimensions: 1536 }),
 });
 
 // Core Ratings Table
@@ -158,3 +164,25 @@ export const watchlist = pgTable("watchlist", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const rentedMovies = pgTable("rented_movies", {
+  id: uuid("id").defaultRandom().primaryKey(), // Unique Watchlist Entry
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  movie_id: integer("movie_id").notNull().references(() => coreMovie.movieId, { onDelete: "cascade" }),
+  tmdbId: doublePrecision("tmdb_id"),
+  movie_title: varchar("movie_title", { length: 255 }).notNull(),
+  poster_url: text("poster_url"),
+  genres: text("genres"),
+  production_companies: text("production_companies"),
+  origin_countries: text("origin_countries"),
+  original_language: varchar("original_language", { length: 10 }),
+  tagline: text("tagline"),
+  dueDate: date("due_date").notNull(),
+  rentedAt: timestamp("rented_at").defaultNow().notNull(),
+  returnedAt: timestamp("returned_at"),
+  status: varchar("status", { length: 20 }).default("rented"),
+  embedding: vector("embedding", { dimensions: 1536 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("idx_user").on(table.user_id),  // ✅ Correct
+]
+);

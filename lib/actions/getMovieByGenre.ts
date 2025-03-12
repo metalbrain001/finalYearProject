@@ -15,7 +15,6 @@ interface GetMoviesParams {
 
 export const getMoviesByGenre = async (params: GetMoviesParams) => {
   try {
-    console.log(`🔍 Fetching movies for genre: ${params.genres}`);
 
     // ✅ Fetch movies directly (no transaction needed)
     const movies = await drizzledb
@@ -30,8 +29,6 @@ export const getMoviesByGenre = async (params: GetMoviesParams) => {
       .where(ilike(coreMovie.genres, `%${params.genres}%`)) // ✅ Case-insensitive search
       .limit(10)
       .execute();
-
-    console.log(`✅ Found ${movies.length} movies for genre: ${params.genres}`);
     return movies; // ✅ Return movies directly (NOT an object)
   } catch (error) {
     console.error("🚨 Error fetching movies:", error);

@@ -1,3 +1,11 @@
+interface AuthCredentials {
+  fullName: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+
 interface ToastOptions {
   title: string;
   description: string;
@@ -166,89 +174,114 @@ interface UploadedMovie {
   createdAt: Date;
 }
 
-export const userUploadedMovies = pgTable(
-  "user_uploaded_movies",
-  {
-    id: serial("id").primaryKey(),
-    title: varchar("title", { length: 255 }).notNull(),
-    movie_year: integer("movie_year").notNull(),
-    director: varchar("director", { length: 255 }).notNull(),
-    movie_plot: text("movie_plot").notNull(),
-    genres: varchar("genres", { length: 255 }).notNull(),
-    description: text("description"),
-    userId: uuid("user_id")
-      .notNull()
-      .references(() => registrations.id, { onDelete: "cascade" }),
-    posterUrl: varchar("poster_url", { length: 255 }).notNull(),
-    movie_url: varchar("movie_url", { length: 255 }).notNull(),
-    movieRuntime: integer("movie_runtime"),
-    actors: varchar("actors", { length: 255 }).notNull(),
-    status: movieStatusEnum("status").default("pending"),
-    createdAt: timestamp("created_at").defaultNow().notNull(),
-  },
-  (table) => [
-    index("idx_user").on(table.userId),  // ✅ Correct
-    index("idx_title").on(table.title),  // ✅ Correct
-  ]
-);
+interface Users {
+  id: string;
+  fullName: string;
+  username: string;
+  email: string;
+  role: Role | null;
+  createdAt: Date;
+}
 
-// export interface MovieDetails {
-//   success: boolean;
-//   data: {
-//     adult: boolean;
-//     backdrop_path: string;
-//     belongs_to_collection?: {
-//       id: number;
-//       name: string;
-//       poster_path: string;
-//       backdrop_path: string;
-//     };
-//     budget: number;
-//     genres: Genre[];
-//     homepage: string;
-//     id: number;
-//     imdb_id: string;
-//     origin_country: string[];
-//     original_language: string;
-//     original_title: string;
-//     overview: string;
-//     popularity: number;
-//     poster_path: string;
-//     production_companies: ProductionCompany[];
-//     production_countries: ProductionCountry[];
-//     release_date: string;
-//     revenue: number;
-//     runtime: number;
-//     spoken_languages: SpokenLanguage[];
-//     status: string;
-//     tagline: string;
-//     title: string;
-//     video: boolean;
-//     vote_average: number;
-//     vote_count: number;
-//     imdbId: string;
-//   };
-// }
+interface RentalProductionCompany {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
 
-// interface Genre {
-//   id: number;
-//   name: string;
-// }
+interface RentedMovies {
+  id?: string;
+  user_id: string;
+  movie_id: number;
+  tmdbId: number;
+  movie_title: string;
+  poster_url: string | null;
+  genres: Genre[];
+  origin_countries: string;
+  original_language: string;
+  tagline: string;
+  rentedAt?: Date;
+  returnedAt?: Date | null;
+  status?: string;
+  isAlreadyRented?: boolean;
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+}
 
-// interface ProductionCompany {
-//   id: number;
-//   logo_path: string | null;
-//   name: string;
-//   origin_country: string;
-// }
+interface UserRentedMovies {
+  id: string;
+  user_id: string;
+  movie_id: number;
+  tmdbId: number;
+  movie_title: string;
+  poster_url: string;
+  rentedAt: Date;
+  dueDate: Date;
+  returnedAt: Date | null;
+  status: string;
+  createdAt: Date;
+  embedding: number[];
 
-// interface ProductionCountry {
-//   iso_3166_1: string;
-//   name: string;
-// }
+}
 
-// interface SpokenLanguage {
-//   english_name: string;
-//   iso_639_1: string;
-//   name: string;
-// }
+interface SaveRentalMovieDetails {
+  id?: string;
+  user_id: string;
+  genres: Genre[];
+  movie_id: number;
+  tmdbId: number;
+  movie_title: string;
+  poster_url: string | null;
+  rentedAt?: Date;
+  dueDate: Date;
+  returnedAt?: Date | null;
+  origin_countries: string[];
+  original_language: string;
+  production_companies: ProductionCompany[];
+  status?: string;
+  tagline: string;
+  embedding: number[];
+  isAlreadyRented?: boolean;
+}
+
+
+interface RecommendedMovies {
+  id: number;
+  title: string;
+  genres: string;
+  description: string;
+  poster_url: string | null;
+  description?: string;
+}
+
+export interface VectorRecommendation extends Record<string, unknown> {
+  id: string;
+  movie_title: string;
+  user_id?: string;
+  genres: string;
+  poster_url: string | null;
+  status: string | null;
+  similarity: number;
+}
+
+export interface MovieSegment {
+  id: number;
+  movieId: number;
+  movie_id: number;
+  title: string;
+  genres: string;
+  createdAt: Date;
+  imdbId: string | null;
+  tmdbId: number | null;
+  userId: number;
+  posterUrl: string;
+  status: string | null;
+  embedding: number[];
+  poster_url: string;
+  avg_rating: number;
+}
+
+type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
+
+export const imageKitUrl = "https://ik.imagekit.io/metalbrainimage";

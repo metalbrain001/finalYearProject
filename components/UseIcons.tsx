@@ -12,6 +12,10 @@ import {
   Bot,
   X,
   Clapperboard,
+  Play,
+  PlayCircle,
+  Plus,
+  BotMessageSquare,
 } from "lucide-react";
 import { JSX } from "react";
 
@@ -56,6 +60,12 @@ const Icons = (): IconComponents => {
     Bot: (props) => <Bot {...defaultProps} {...props} />,
     X: (props) => <X {...defaultProps} {...props} />,
     Clapperboard: (props) => <Clapperboard {...defaultProps} {...props} />,
+    Play: (props) => <Play {...defaultProps} {...props} />,
+    PlayCircle: (props) => <PlayCircle {...defaultProps} {...props} />,
+    Plus: (props) => <Plus {...defaultProps} {...props} />,
+    BotMessageSquare: (props) => (
+      <BotMessageSquare {...defaultProps} {...props} />
+    ),
   };
 };
 

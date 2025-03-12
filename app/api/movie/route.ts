@@ -15,10 +15,6 @@ export async function GET(req: NextRequest) {
     // Calculate offset
     const offset = (page - 1) * limit;
 
-    console.log(`Fetching movies - Page: ${page}, Limit: ${limit}`);
-
-    // Fetch ratings for each movie and pass result as avg_rating to movies
-
     // ✅ Fetch movies with the enforced max limit
     const movies = await drizzledb
       .select({

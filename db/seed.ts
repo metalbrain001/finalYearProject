@@ -46,7 +46,7 @@ export default async function seed() {
     // ✅ Hash passwords for all users
     const hashedPassword = await hash("{Xa'V@#|Pi%9", 10); // Default password
 
-    // ✅ Ensure `role` matches expected types & convert dates
+    // ✅ Prepare users data for insertion
     const usersToInsert = dummyRegistrations.map((user: any) => ({
       id: user.id,
       fullName: user.fullName,

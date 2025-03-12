@@ -7,9 +7,9 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   try {
     const movieId = (await params)?.id;
 
-    if (!movieId) {
-      console.error("❌ Missing movieId in request");
-      return NextResponse.json({ success: false, message: "movieId is required." }, { status: 400 });
+    if (!movieId || isNaN(Number(movieId))) {
+      console.error("❌ Invalid movieId in request:", movieId);
+      return NextResponse.json({ success: false, message: "Invalid movieId provided." }, { status: 400 });
     }
 
     // 🔹 Fetch `tmdbId` and `imdbId` from database
@@ -27,19 +27,25 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 
     const { tmdbId, imdbId } = result[0];
 
+    if (!tmdbId) {
+      return NextResponse.json({
+        success: false,
+        message: `No TMDb ID found in database for movieId: ${movieId}`,
+      }, { status: 400 });
+    }
+
     // 🔹 Fetch metadata from TMDb API
     const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || "";
     const baseUrl = "https://api.themoviedb.org/3";
-    const tmdbResponse = await fetch(`${baseUrl}/movie/${tmdbId}?api_key=${apiKey}&language=en-US`);
 
+    const tmdbResponse = await fetch(`${baseUrl}/movie/${tmdbId}?api_key=${apiKey}&language=en-US`);
     if (!tmdbResponse.ok) {
       throw new Error(`Failed to fetch movie metadata from TMDb. Status: ${tmdbResponse.status}`);
     }
-
     const metadata = await tmdbResponse.json();
 
 
-    return NextResponse.json({ success: true, data: { ...metadata, imdbId } });
+    return NextResponse.json({ success: true, data: { ...metadata, imdbId, tmdbId } });
   } catch (error: any) {
     console.error("❌ API Error:", error.message);
     return NextResponse.json(

@@ -7,7 +7,6 @@ import Link from "next/link";
 import MoviePlaceH from "./icons/MoviePlaceH";
 import { useMotion } from "@/hooks/use-motion";
 import Icons from "./UseIcons";
-import { set } from "zod";
 
 const ChatBot = () => {
   const [message, setMessage] = useState(""); // ✅ User input

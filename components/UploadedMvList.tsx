@@ -1,6 +1,8 @@
 import { getUploadedMovies } from "@/lib/actions/getUploadedMv";
 import { auth } from "@/auth";
 import Icons from "@/components/UseIcons";
+import { IKImage } from "imagekitio-next";
+import { imageKitUrl } from "@/types";
 
 const UploadedMoviesList = async () => {
   const session = await auth();

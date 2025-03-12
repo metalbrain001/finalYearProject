@@ -78,6 +78,54 @@ export class OpenAIClient {
       return { genres: "any", count: 10 };
     }
   }
+
+  // Embedding the chat completion function in the OpenAIClient class
+  /**
+   * Generate an embedding vector from a given text using OpenAI embeddings API.
+   */
+  async generateEmbedding(text: string, embeddingModel: string = "text-embedding-ada-002"): Promise<number[]> {
+    try {
+      const response = await this.client.embeddings.create({
+        model: embeddingModel,
+        input: text.replace(/\n/g, " "),
+      });
+      return response.data[0].embedding;
+    } catch (error) {
+      console.error("❌ OpenAI Embedding API Error:", error);
+      throw new Error("Failed to generate embedding vector");
+    }
+  }
+
+  // Response API for the OpenAI chat completion
+  /**
+   * Generate a response from the chat completion API.
+   */
+
+  // ✅ Add the response API method
+  async generateResponse(
+    messages: { role: "system" | "user" | "assistant"; message: string }[],
+    maxTokens = 100,
+    temperature = 0.7
+  ): Promise<string> {
+    try {
+      const chatMessages: { role: "system" | "user" | "assistant"; content: string; }[] = messages.map((msg) => ({
+        role: msg.role,
+        content: msg.message,
+      }));
+
+      const response = await this.client.chat.completions.create({
+        model: this.model,
+        messages: chatMessages,
+        max_tokens: maxTokens,
+        temperature,
+      });
+
+      return response.choices[0].message?.content?.trim() || "I'm sorry, I couldn't process your request.";
+    } catch (error) {
+      console.error("❌ OpenAI Chat API Error:", error);
+      return "I'm sorry, I couldn't process your request.";
+    }
+  }
 }
 
 

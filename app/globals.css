@@ -548,7 +548,20 @@
     min-height: 100vh;
   }
 
+  .user-container {
+    @apply flex w-full flex-1 flex-col bg-dark-4 p-5 xs:p-10;
+  }
+
   @layer movies {
+
+    .welcome-message {
+      @apply flex items-center w-full justify-between text-2xl font-poppins font-semibold text-light-1 gap-6;
+    }
+
+    .user-sidebar {
+      @apply sticky left-0 top-0 flex h-dvh flex-col bg-dark-3 px-5 pb-5 pt-10;
+    }
+
     .movie-container {
       @apply min-h-[100vh] flex flex-col items-center gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar;
     }
@@ -599,6 +612,10 @@
 
     .movie-form_btn {
       @apply min-h-14 w-full bg-primary-600 hover:bg-primary-600/95 !important;
+    }
+
+    .movie-overview_btn {
+      @apply min-h-14 w-[40%] bg-primary-500 hover:bg-primary-500/95 mt-6 !important;
     }
   }
 
