@@ -578,6 +578,10 @@
       @apply mt-1 line-clamp-1 text-sm italic text-off-white xs:text-base;
     }
 
+    .movie-textarea {
+      @apply h-16 bg-dark-3 rounded-xl text-lg border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 !important;
+    }
+
     .movie-list {
       @apply w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7 max-w-5xl;
     }
@@ -617,6 +621,12 @@
     .movie-overview_btn {
       @apply min-h-14 w-[40%] bg-primary-500 hover:bg-primary-500/95 mt-6 !important;
     }
+
+    .movie-button_dark_5 {
+      @apply h-12 bg-rose-950 px-5 text-light-1 flex gap-2 !important;
+
+    }
+
   }
 
   @layer components {

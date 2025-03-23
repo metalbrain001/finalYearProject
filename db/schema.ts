@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, sql } from "drizzle-orm";
 import {
   integer,
   varchar,
@@ -16,8 +16,10 @@ import {
   unique,
   index, // FIXED: Added numeric type
   vector,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { stat } from "fs";
+import { release } from "os";
 
 export const ROLE_ENUM = pgEnum("role", ["user", "admin", "superadmin"]);
 
@@ -54,7 +56,6 @@ export const coreMovie = pgTable("core_movie", {
   title: varchar("title", { length: 255 }).notNull(),
   genres: varchar("genres", { length: 255 }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-
   imdbId: varchar("imdb_id", { length: 20 }),
   tmdbId: doublePrecision("tmdb_id"),
   userId: integer("user_id").notNull().references(() => coreUser.id, {
@@ -169,20 +170,66 @@ export const rentedMovies = pgTable("rented_movies", {
   user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
   movie_id: integer("movie_id").notNull().references(() => coreMovie.movieId, { onDelete: "cascade" }),
   tmdbId: doublePrecision("tmdb_id"),
+  imdbId: varchar("imdb_id", { length: 20 }),
   movie_title: varchar("movie_title", { length: 255 }).notNull(),
   poster_url: text("poster_url"),
   genres: text("genres"),
   production_companies: text("production_companies"),
   origin_countries: text("origin_countries"),
   original_language: varchar("original_language", { length: 10 }),
+  spoken_languages: text("spoken_languages"),
   tagline: text("tagline"),
+  release_date: date("release_date"),
   dueDate: date("due_date").notNull(),
   rentedAt: timestamp("rented_at").defaultNow().notNull(),
   returnedAt: timestamp("returned_at"),
+  revenue: integer("revenue"),
+  vote_average: doublePrecision("vote_average"),
+  vote_count: integer("vote_count"),
+  description: text("description"),
+  runtime: integer("runtime"),
   status: varchar("status", { length: 20 }).default("rented"),
   embedding: vector("embedding", { dimensions: 1536 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => [
   index("idx_user").on(table.user_id),  // ✅ Correct
+  index("idx_movie").on(table.movie_id),  // ✅ Correct
+  index("idx_tmdb").on(table.tmdbId),  // ✅ Correct
+  index("idx_imdb").on(table.imdbId),  // ✅ Correct
+  index("idx_status").on(table.status),  // ✅ Correct
+  index("idx_rented").on(table.rentedAt),  // ✅ Correct
+  index("idx_returned").on(table.returnedAt),  // ✅ Correct
 ]
 );
+
+export const preferences = pgTable("preferences", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  genres: text("genres").notNull(),
+  actors: text("actors").notNull(),
+  languages: text("languages").notNull(),
+  directors: text("directors").notNull(),
+  content_types: text("content_types").notNull(),
+  mood_tags: text("mood_tags").notNull(),
+  age_rating: text("age_rating").notNull(),
+  preferred_duration: text("preferred_duration").notNull(),
+  interest_keywords: text("interest_keywords").notNull(),
+  watch_frequency: text("watch_frequency").notNull(),
+  embedding: vector("embedding", { dimensions: 1536 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const feedbackTypeEnum = pgEnum('feedback_type', ['like', 'dislike']);
+
+export const movieFeedback = pgTable("movie_feedback", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  movie_id: integer("movie_id").notNull().references(() => coreMovie.movieId, { onDelete: "cascade" }),
+  imdb_id: varchar("imdb_id", { length: 20 }),
+  feedback_type: feedbackTypeEnum('feedback_type').notNull(),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+}, (table) => [
+  index("idx_user").on(table.user_id),
+  index("idx_movie").on(table.movie_id),
+  index("idx_feedback").on(table.feedback_type),
+]);

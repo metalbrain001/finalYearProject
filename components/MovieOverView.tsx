@@ -10,6 +10,8 @@ import CastList from "./CastList";
 import useMovieCast from "@/hooks/use-getcast";
 import RentMoviebtn from "./RentMoviebtn";
 import { useSession } from "next-auth/react";
+import { FeedbackToggle } from "@/components/FeedBackToggle";
+import { FeedbackTypeEnum } from "@/constants";
 
 const MovieOverView = () => {
   const { id } = useParams();
@@ -161,22 +163,25 @@ const MovieOverView = () => {
           {/* ✅ Rent Movie Button (Pass Props) */}
           {session?.user?.id && (
             <RentMoviebtn
-              movie_id={Number(movieDetails?.id)}
+              movie_id={Number(movieDetails?.id || movieDetails?.movie_id)}
               user_id={session.user.id} // 🔹 Pass userId dynamically
               movie_title={movieDetails?.title || ""}
               poster_url={`https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`}
               tmdbId={movieDetails?.id || 0}
+              status={movieDetails?.status || ""}
               genres={
                 movieDetails?.genres.map((genre) => ({
                   id: genre.id,
                   name: genre.name,
                 })) || []
               }
+              vote_average={movieDetails?.vote_average || 0}
               origin_countries={
                 movieDetails?.production_countries
                   ?.map((country) => country.name)
                   .join(", ") || ""
               }
+              spoken_languages={movieDetails?.spoken_languages || []}
               original_language={movieDetails?.original_language || ""}
               tagline={movieDetails?.tagline || ""}
               production_countries={movieDetails?.production_countries || []}
@@ -190,6 +195,14 @@ const MovieOverView = () => {
               }
             />
           )}
+          <FeedbackToggle
+            movie_id={Number(movieDetails?.id || movieDetails?.movie_id)}
+            user_id={String(session?.user?.id)}
+            imdb_id={String(movieDetails?.imdb_id)}
+            currentFeedbackType={
+              movieDetails?.status as FeedbackTypeEnum | null
+            }
+          />
         </div>
         <div className="items-center gap-2">
           <h2 className="text-3xl font-semibold text-slate-400">Cast</h2>

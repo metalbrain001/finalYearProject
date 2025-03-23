@@ -38,6 +38,7 @@ export interface MovieDetails {
   genres: Genre[];
   homepage: string;
   id: number;
+  movie_id: number;
   imdb_id: string;
   origin_country: string[];
   original_language: string;
@@ -207,6 +208,12 @@ interface RentedMovies {
   isAlreadyRented?: boolean;
   production_companies: ProductionCompany[];
   production_countries: ProductionCountry[];
+  vote_average?: number;
+  release_date?: string;
+  revenue?: number;
+  runtime?: number;
+  spoken_languages: SpokenLanguage[];
+  description?: string;
 }
 
 interface UserRentedMovies {
@@ -280,6 +287,61 @@ export interface MovieSegment {
   embedding: number[];
   poster_url: string;
   avg_rating: number;
+}
+
+export interface Preferences {
+  id: string;
+  user_id: string;
+  genres: string;
+  actors: string;
+  directors: string;
+  languages: string;
+  content_types: string;
+  mood_tags: string;
+  age_rating: string;
+  preferred_duration: string;
+  interest_keywords: string;
+  watch_frequency: string;
+  embedding: number[];
+  createdAt: Date;
+}
+
+export interface OnboardingData {
+  genres: string[];
+  actors: string[];
+  directors: string[];
+  languages: string[];
+  content_types: string;
+  mood_tags: string;
+  age_rating: string;
+  preferred_duration: string;
+  interest_keywords: string;
+  watch_frequency: string;
+}
+
+export interface TMDBApiMovie {
+  title: string;
+  tagline: string;
+  poster_path: string;
+  genres: { id: number; name: string }[];
+  production_companies: { name: string }[];
+  production_countries: { name: string }[];
+  original_language: string;
+  overview: string;
+  imdb_id: string;
+  tmdbId: number;
+  vote_average: number;
+  spoken_languages: { english_name: string }[];
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  status: string;
+  vote_count: number;
+}
+
+export enum FeedbackTypeEnum {
+  Like = 'like',
+  Dislike = 'dislike',
 }
 
 type ChatMessage = { role: "system" | "user" | "assistant"; content: string };

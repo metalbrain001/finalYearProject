@@ -1,8 +1,7 @@
 import React from "react";
 import { MovieSegment } from "@/types";
 import Link from "next/link";
-import PaginationForm from "./PaginationForm";
-import { usePagination } from "@/hooks/use-pagination";
+import Icons from "@/components/UseIcons";
 
 interface MovieSegmentCardProps {
   title: string;
@@ -13,6 +12,7 @@ const MovieSegmentCard: React.FC<MovieSegmentCardProps> = ({
   title,
   movies,
 }) => {
+  const { PlayCircle, Plus } = Icons();
   const backUpimg =
     "https://fakeimg.pl/600x400/d43333/f5e2e2?text=no+image&font=bebas";
   return (
@@ -45,9 +45,20 @@ const MovieSegmentCard: React.FC<MovieSegmentCardProps> = ({
             </Link>
             <div className="p-2 text-white">
               <h4 className="text-sm font-semibold truncate">{movie.title}</h4>
-              {movie.genres && (
-                <p className="text-xs text-gray-400 truncate">{movie.genres}</p>
-              )}
+              <div className="flex items-center justify-between">
+                {movie.genres && (
+                  <p className="text-xs text-gray-400 truncate">
+                    {movie.genres}
+                  </p>
+                )}
+                <Link
+                  href={`/movie/${movie.movieId || movie.movie_id}`}
+                  className="inline-flex items-center justify-center gap-1 text-xs text-blue-400 hover:text-blue-300 mt-2"
+                >
+                  <PlayCircle size={14} />
+                  <span>View More</span>
+                </Link>
+              </div>
             </div>
           </div>
         ))}

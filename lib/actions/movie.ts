@@ -5,6 +5,9 @@ import { coreMovie, registrations, rentedMovies } from "@/db/schema";
 import { eq, and, or } from "drizzle-orm";
 import dayjs from "dayjs";
 import { embeddings } from "./embedding";
+import { getOrCreateMovieId } from "@/lib/helper/getMovieOrCreate";
+import { flattenMovieMetadata } from "../helper/tmdbAPIMovie";
+
 
 export const rentMovie = async (params: {
   movie_id: number;
@@ -16,10 +19,17 @@ export const rentMovie = async (params: {
   production_companies: string;
   origin_countries: string;
   original_language: string;
+  spoken_languages: string[];
+  description: string;
+  imdb_id: string;
+  vote_average: number;
+  release_date: string;
+  revenue: number;
+  runtime: number;
   tagline: string;
   embedding: number[];
 }) => {
-  const { movie_id, user_id, tmdbId, movie_title, poster_url, genres, production_companies, origin_countries, original_language, tagline } = params;
+  const { movie_id, user_id, tmdbId, movie_title, poster_url, genres, production_companies, origin_countries, original_language, spoken_languages, description, imdb_id, vote_average, release_date, revenue, runtime, tagline } = params;
 
   try {
 
@@ -27,17 +37,31 @@ export const rentMovie = async (params: {
     if (!movie_id || !user_id) {
       throw new Error("Missing required parameters: movie_id or user_id");
     }
+
+    // Use getOrCreateMovieId to insert movie if it doesn't exist
+    const movieId = await getOrCreateMovieId(tmdbId, {
+      title: movie_title,
+      poster_url,
+      genres,
+      tmdb_id: tmdbId,
+      imdb_id: "",
+    });
     // Start transaction
     const result = await drizzledb.transaction(async (tx) => {
       // Fetch movie and check availability
       const movie = await tx
         .select()
         .from(coreMovie)
-        .where(eq(coreMovie.id, movie_id))
+        // .where(eq(coreMovie.tmdbId, tmdbId))
+        .where(eq(coreMovie.id, movieId))
         .limit(1)
         .execute();
 
       // 2. Check if it's available
+      if (!movie.length) {
+        throw new Error("Movie not found in the database.");
+      }
+
       if (movie[0].status !== "available") {
         throw new Error("Movie is currently not available for rent.");
       }
@@ -75,20 +99,48 @@ export const rentMovie = async (params: {
       const rentedAt = new Date();
       const dueDate = dayjs(rentedAt).add(3, "days").toDate();
 
-      // Insert rental record
+      const production_countries = origin_countries.split(",").map((country) => ({ name: country.trim() }));
+      const metadata = flattenMovieMetadata({
+        movie_id: movieId,
+        title: movie_title,
+        poster_path: poster_url,
+        production_countries,
+        original_language,
+        spoken_languages: spoken_languages.map((l) => ({ english_name: l.trim() })),
+        imdb_id,
+        tmdbId,
+        vote_average,
+        release_date,
+        revenue,
+        runtime,
+        tagline,
+        genres: genres.split(",").map((g) => ({ name: g.trim() })),
+        production_companies: production_companies.split(",").map((c) => ({ name: c.trim() })),
+        overview: description,
+        status: "rented",
+        vote_count: vote_average,
+      });
+
       const insertedRental = await tx.insert(rentedMovies).values({
-        movie_id,
+        movie_id: movieId,
         user_id,
         tmdbId,
-        movie_title,
+        movie_title: movie_title,
         poster_url,
         rentedAt,
         dueDate: dueDate.toISOString(),
         status: "rented",
-        genres: genres,
-        production_companies: production_companies,
-        origin_countries: origin_countries,
+        genres: metadata.genres,
+        production_companies: metadata.production_companies,
+        origin_countries: metadata.origin_countries,
         original_language,
+        spoken_languages: metadata.spoken_languages,
+        imdbId: imdb_id,
+        vote_average: metadata.vote_average,
+        release_date: metadata.release_date,
+        revenue: metadata.revenue,
+        runtime: metadata.runtime,
+        description: metadata.description,
         tagline,
         embedding: embedVector
       }).returning().execute();

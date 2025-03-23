@@ -17,7 +17,7 @@ const UploadedMoviesList = async () => {
   const uploadedMovies = await getUploadedMovies(userId);
 
   return (
-    <section className="w-full max-w-7xl">
+    <section className="px-6 py-8 space-y-10 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
         <div className="flex flex-col">
           <p className="text-2xl font-poppins text-gray-300 font-semibold">

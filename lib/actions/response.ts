@@ -1,3 +1,4 @@
+"use server";
 // Server action for OpenAI chat response
 import { OpenAIClient } from '@/lib/OpenAiClient';
 import { ChatMessage } from '@/types';

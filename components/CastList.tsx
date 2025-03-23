@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import CastCard from "./CastCard";
 import PaginationForm from "./PaginationForm";
+import EmptyState from "./ui/emptystate";
+import { Users } from "lucide-react";
 
 interface CastListProps {
   cast: {
@@ -19,6 +21,17 @@ const CastList: React.FC<CastListProps> = ({ cast, itemsPerPage = 6 }) => {
   const totalPages = Math.ceil(cast.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const selectedCast = cast.slice(startIndex, startIndex + itemsPerPage);
+
+  if (!cast || cast.length === 0) {
+    return (
+      <EmptyState
+        title="No Cast Available"
+        message="Cast information for this movie is not available at the moment."
+        // icon={<Users size={40} />}
+        imageSrc="/images/casthead.svg" // Optional fallback image
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col items-center pt-10 w-full">

@@ -71,6 +71,49 @@ export const SEARCH_TYPES = {
   author: "Author",
 };
 
+export const PREFERENCE_FIELD_NAMES = {
+  actors: "Favorite Actors",
+  directors: "Favorite Directors",
+  content_types: "Content Type",
+  mood_tags: "Mood Tags",
+  age_rating: "Age Rating",
+  preferred_duration: "Preferred Duration",
+  interest_keywords: "Interest Keywords",
+  watch_frequency: "Watch Frequency",
+} as const;
+
+export const PREFERENCE_FIELD_TYPES = {
+  actors: "text",
+  directors: "text",
+  content_types: "text",
+  mood_tags: "text",
+  age_rating: "text",
+  preferred_duration: "text",
+  interest_keywords: "text",
+  watch_frequency: "text",
+};
+
+export const genreOptions = [
+  "Action",
+  "Drama",
+  "Comedy",
+  "Horror",
+  "Thriller",
+  "Sci-Fi",
+];
+export const languageOptions = ["English", "Spanish", "French", "Hindi", "Korean"];
+
+export const placeholder = {
+  actors: "Leonardo DiCaprio, Tom Hanks",
+  directors: "Christopher Nolan, Quentin Tarantino",
+  content_types: "Movies, TV Shows",
+  mood_tags: "Thriller, Comedy",
+  age_rating: "PG-13, R",
+  preferred_duration: "1h 30m, 2h",
+  interest_keywords: "Action, Drama",
+  watch_frequency: "Daily, Weekly",
+};
+
 // Dummy Data for registration table
 export const dummyRegistrations: {
   id: string;
@@ -187,3 +230,8 @@ export const userSideBarLinks = [
     label: "Logout",
   },
 ];
+
+export enum FeedbackTypeEnum {
+  Like = 'like',
+  Dislike = 'dislike',
+}

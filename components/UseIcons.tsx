@@ -16,6 +16,7 @@ import {
   PlayCircle,
   Plus,
   BotMessageSquare,
+  ThumbsUp,
 } from "lucide-react";
 import { JSX } from "react";
 
@@ -52,6 +53,7 @@ const Icons = (): IconComponents => {
     Star: (props) => <Star {...defaultProps} {...props} />,
     Ghost: (props) => <Ghost {...defaultProps} {...props} />,
     Laugh: (props) => <Laugh {...defaultProps} {...props} />,
+    ThumbsUp: (props) => <ThumbsUp {...defaultProps} {...props} />,
     ThumbsDown: (props) => <ThumbsDown {...defaultProps} {...props} />,
     StarIcon: (props) => <Star {...defaultProps} {...props} />,
     Film: (props) => <FilmIcon {...defaultProps} {...props} />,

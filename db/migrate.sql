@@ -49,4 +49,41 @@ WHERE user_id = '497afe9d-baea-457e-846c-03e16892146b'
 ORDER BY rented_at DESC
 LIMIT 1;
 
+CREATE TABLE preferences (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+    genres TEXT NOT NULL,
+    actors TEXT NOT NULL,
+    directors TEXT NOT NULL,
+    languages TEXT NOT NULL,
+    content_types TEXT NOT NULL,
+    mood_tags TEXT NOT NULL,
+    age_rating TEXT NOT NULL,
+    preferred_duration TEXT NOT NULL,
+    interest_keywords TEXT NOT NULL,
+    watch_frequency TEXT NOT NULL,
+    embedding vector(1536),
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    CONSTRAINT unique_preferences_per_user UNIQUE (user_id, genres)
+);
+
+ALTER TABLE rented_movies
+ADD COLUMN spoken_languages TEXT,
+ADD COLUMN imdb_id VARCHAR(20),
+ADD COLUMN release_date DATE,
+ADD COLUMN revenue BIGINT,
+ADD COLUMN runtime INTEGER,
+ADD COLUMN vote_average DOUBLE PRECISION,
+ADD COLUMN vote_count INTEGER,
+ADD COLUMN description TEXT;
+
+CREATE TABLE movie_feedback (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+    movie_id INTEGER NOT NULL REFERENCES core_movie(id) ON DELETE CASCADE,
+    tmdb_id INTEGER NOT NULL,
+    feedback_type VARCHAR(10) CHECK (feedback_type IN ('like', 'dislike')) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    CONSTRAINT unique_feedback_per_user UNIQUE (user_id, movie_id)
+);
 

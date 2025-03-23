@@ -46,3 +46,16 @@ export const myAccountSchema = z.object({
   password: z.string().min(6).optional(),
   role: z.string().min(3).optional(),
 });
+
+export const onboardingSchema = z.object({
+  genres: z.array(z.string()).min(1, "Select at least one genre"),
+  languages: z.array(z.string()).min(1, "Select at least one language"),
+  actors: z.string().optional(),
+  directors: z.string().optional(),
+  content_types: z.string().optional(),
+  mood_tags: z.string().optional(),
+  age_rating: z.string().optional(),
+  preferred_duration: z.string().optional(),
+  interest_keywords: z.string().optional(),
+  watch_frequency: z.string().optional(),
+});

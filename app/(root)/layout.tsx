@@ -3,9 +3,7 @@ import React, { ReactNode } from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
-import { eq } from "drizzle-orm";
-import { registrations } from "@/db/schema";
-import { drizzledb } from "@/db/drizzle";
+import { updateUserlastseen } from "@/lib/helper/updateUserlastseen";
 
 const layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
@@ -13,21 +11,10 @@ const layout = async ({ children }: { children: ReactNode }) => {
 
   after(async () => {
     if (!session?.user?.id) return;
-
-    // get the user and see if the last activity is today
-    const user = await drizzledb
-      .select()
-      .from(registrations)
-      .where(eq(registrations.id, session?.user.id))
-      .limit(1);
-    if (user[0].createdAt.toDateString() === new Date().toDateString()) return;
-
-    // Update user's last seen
-    await drizzledb
-      .update(registrations)
-      .set({ createdAt: new Date() })
-      .where(eq(registrations.id, session?.user.id));
   });
+
+  // Update the user's last seen
+  await updateUserlastseen(session?.user?.id as string);
 
   return (
     <main className="root-container">
