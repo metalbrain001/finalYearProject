@@ -12,6 +12,7 @@ import RentMoviebtn from "./RentMoviebtn";
 import { useSession } from "next-auth/react";
 import { FeedbackToggle } from "@/components/FeedBackToggle";
 import { FeedbackTypeEnum } from "@/constants";
+import StarDisplayRating from "./StarDisplayRating";
 
 const MovieOverView = () => {
   const { id } = useParams();
@@ -21,8 +22,6 @@ const MovieOverView = () => {
   const { trailer, loading: trailerLoading } = useMovieTrailer(String(id));
 
   const { cast, loading: castLoading } = useMovieCast(String(id));
-
-  console.log("Movie Details:", movieDetails);
 
   if (loading) return <p>Loading movie details...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -48,21 +47,11 @@ const MovieOverView = () => {
         <div className="flex flex-col gap-4 text-white">
           {/* ✅ Movie Title */}
           <h1 className="text-3xl font-bold">{movieDetails?.title}</h1>
-
-          {/* ✅ Movie Rating & Votes */}
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-yellow-400">
-              {/* <Star size={24} strokeWidth={2} color="gold" fill="gold" /> */}
-              <StarRating />
-              <span className="text-lg">
-                {movieDetails?.vote_average.toFixed(1)} / 10
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-400">
-              <p className="text-lg">Votes:</p>
-              <Ghost size={24} strokeWidth={2} color="blue" fill="blue" />
-              <span>{movieDetails?.vote_count} votes</span>
-            </div>
+          <div className="flex items-center gap-2 text-yellow-400">
+            <StarDisplayRating rating={movieDetails?.vote_average || 0} />
+            <span className="text-lg">
+              {movieDetails?.vote_average.toFixed(1)} / 10
+            </span>
           </div>
 
           {/* ✅ Genre List */}
@@ -200,7 +189,8 @@ const MovieOverView = () => {
             user_id={String(session?.user?.id)}
             imdb_id={String(movieDetails?.imdb_id)}
             currentFeedbackType={
-              movieDetails?.status as FeedbackTypeEnum | null
+              (movieDetails?.feedback_type as FeedbackTypeEnum) ??
+              FeedbackTypeEnum.None
             }
           />
         </div>

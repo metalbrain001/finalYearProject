@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   images: {
@@ -40,30 +41,9 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   experimental: {
-    turbo: {
-      rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
-        },
-      },
-    },
+    useCache: true,
   },
-  webpack: (config, options) => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        options.defaultLoaders.babel,
-        {
-          loader: "@svgr/webpack",
-          options: {
-            icon: true,
-          },
-        },
-      ],
-    });
-    return config;
-  },
+  turbopack: {},
   async headers() {
     return [
       {

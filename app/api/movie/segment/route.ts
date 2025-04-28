@@ -1,7 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import { drizzledb } from "@/db/drizzle";
-import { coreMovie, coreLinks } from "@/db/schema";
-import { eq, desc } from "drizzle-orm";
 import { getHomepageMovies } from "@/lib/actions/getmovierate";
 
 export async function GET(req: NextRequest) {

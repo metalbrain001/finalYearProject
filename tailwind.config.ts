@@ -42,6 +42,27 @@ module.exports = {
 				ring: "hsl(0, 0%, 50%)", // ✅ Define `outline-ring`
 				background: "hsl(210, 20%, 98%)", // ✅ Define `bg-background`
 				foreground: "hsl(222, 47%, 11%)", // ✅ Define `text-foreground`
+				dashboard: {
+					DEFAULT: "#0f1117",      // deep matte dark
+					surface: "#1a1d29",      // card/chart surfaces
+					accent: "#1e293b",       // subtle highlights
+					border: "#2c2f3a",       // chart borders/gridlines
+				},
+				// ✅ Define custom colors for sidebar
+				sidebar: {
+					DEFAULT: "#04030F",      // deep matte dark
+					surface: "#1a1d29",      // card/chart surfaces
+					accent: "#1e293b",       // subtle highlights
+					border: "#2c2f3a",       // chart borders/gridlines
+				},
+				// ✅ Define custom colors for user card
+				user: {
+					DEFAULT: "#0f1117",        // base dark background
+					surface: "#1f2937",        // elevated card surface (dark slate)
+					accent: "#38bdf8",         // pop of blue for hover, active, badges
+					border: "#334155",         // slate-700 border
+					shadow: "0 4px 12px rgba(0,0,0,0.3)", // floating effect (use inline or class)
+				},
 			},
 			screens: {
 				xs: '480px',

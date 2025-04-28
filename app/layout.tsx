@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+// import { ThemeProvider } from "@/components/resources/ThemeProvider";
 
 const ibmPlexsans = localFont({
   src: [
@@ -58,10 +59,15 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <SessionProvider session={session}>
         <body
-          className={`${ibmPlexsans.className} ${bebasNeue.variable} bg-dark-2 text-light-1 antialiased`}
+          className={`${ibmPlexsans.className} ${bebasNeue.variable} bg-gray-950 text-light-1 antialiased`}
         >
           {children}
-          <Toaster />
+          <Toaster
+            theme="dark"
+            toastOptions={{
+              className: "bg-light-1 text-dark-1",
+            }}
+          />
         </body>
       </SessionProvider>
     </html>

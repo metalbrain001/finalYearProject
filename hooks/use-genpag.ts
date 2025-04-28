@@ -43,7 +43,6 @@ export const useGenrePagination = (genre: string, initialLimit = 12) => {
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      fetchMovies(page);
     }
   };
 

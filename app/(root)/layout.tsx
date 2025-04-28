@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 import { updateUserlastseen } from "@/lib/helper/updateUserlastseen";
+import { ThemeProvider } from "@/components/resources/ThemeProvider";
 
 const layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
@@ -17,10 +18,12 @@ const layout = async ({ children }: { children: ReactNode }) => {
   await updateUserlastseen(session?.user?.id as string);
 
   return (
-    <main className="root-container">
+    <main className="root-container bg-dashboard">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <Header session={session} />
-        <div className="mt-20 pb-20">{children}</div>
+        <div className="mt-20 pb-20">
+          <ThemeProvider>{children}</ThemeProvider>
+        </div>
       </div>
     </main>
   );

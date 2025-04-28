@@ -13,7 +13,7 @@ const VectorRecommendation = ({ userId }: { userId: string }) => {
     <div>
       <div className="mt-6">
         <h3 className="text-2xl font-bold font-poppins text-white mb-4">
-          🎯 Recommended for You
+          🎯 Recommended for you
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
           {Array.isArray(recommendations) && recommendations.length > 0 ? (

@@ -1,9 +1,7 @@
 "use client";
 
 import React from "react";
-import OnboardingForm from "@/components/OnBoardingForm";
 import OnboardForm from "@/components/OnboardingFM";
-import { onboardingSchema } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

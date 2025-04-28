@@ -22,6 +22,34 @@ CREATE TABLE rented_movies (
     CONSTRAINT unique_rental UNIQUE (user_id, movie_id, rented_at)
 );
 
+CREATE TABLE pref (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+    genres TEXT NOT NULL,
+    languages TEXT NOT NULL,
+    mood_tags TEXT NOT NULL,
+    age_rating TEXT NOT NULL,
+    embedding vector(1536) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    CONSTRAINT unique_pref UNIQUE (user_id, movie_id)
+);
+
+CREATE TABLE notifications (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+CREATE TABLE fcmTokens (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES registrations(id) ON DELETE CASCADE,
+    token TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+    CONSTRAINT unique_fcm_token UNIQUE (user_id, token)
+);
+
 -- Indexes for better query performance
 CREATE INDEX idx_rented_movies_user_id ON rented_movies(user_id);
 CREATE INDEX idx_rented_movies_movie_id ON rented_movies(movie_id);
@@ -32,3 +60,49 @@ SELECT id, title, status
 FROM core_movie
 WHERE id = 78406;
 
+SELECT DISTINCT rm.genres
+FROM movie_feedback mf
+JOIN rented_movies rm ON mf.movie_id = rm.movie_id
+WHERE mf.user_id = $user_id AND mf.feedback_type = 'like';
+
+SELECT *
+FROM rented_movies
+WHERE user_id != $user_id
+  AND genres IS NOT NULL
+  AND (
+    -- Match if any liked genre is found
+    genres ILIKE ANY (ARRAY[
+      '%Drama%', '%Crime%', '%Thriller%',
+      '%Comedy%', '%Family%', '%Romance%'
+    ])
+  )
+  AND movie_id NOT IN (
+    SELECT movie_id
+    FROM movie_feedback
+    WHERE user_id = $user_id
+  )
+LIMIT 10;
+
+
+SELECT *
+FROM rented_movies
+WHERE embedding IS NOT NULL
+  AND movie_id NOT IN (
+    SELECT movie_id
+    FROM movie_feedback
+    WHERE user_id = $user_id
+  )
+ORDER BY embedding <-> (
+  SELECT embedding
+  FROM rented_movies rm
+  JOIN movie_feedback mf ON mf.movie_id = rm.movie_id
+  WHERE mf.user_id = $user_id AND mf.feedback_type = 'like'
+  ORDER BY mf.created_at DESC
+  LIMIT 1
+)
+LIMIT 10;
+
+SELECT * FROM movie_feedback
+WHERE user_id = '449d3d12-e79b-4523-b0e2-6c704926a132' AND feedback_type = 'like'
+ORDER BY created_at DESC
+LIMIT 1;

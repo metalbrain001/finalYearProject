@@ -2,8 +2,9 @@ import NextAuth, { CredentialsSignin, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { drizzledb } from "./db/drizzle";
-import { registrations } from "./db/schema";
+import { registrations } from "./database/schema";
 import { eq } from "drizzle-orm";
+import { Role } from "./types";
 
 class InvalidLoginError extends CredentialsSignin {
   code = "Invalid identifier or password";
@@ -19,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials.email || !credentials.password) {
           throw new InvalidLoginError();
         }
+
         const user = await drizzledb
           .select()
           .from(registrations)
@@ -29,7 +31,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null;
         }
 
-        console.log(`User Full details: ${user[0]}`);
 
         const isPasswordValid = await compare(
           credentials.password.toString(),
@@ -58,6 +59,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.role = user.role;
       }
       return token;
     },
@@ -66,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.id as string;
         session.user.name = token.name as string;
         session.user.email = token.email as string;
+        session.user.role = token.role as Role;
         return session;
       }
       return session;

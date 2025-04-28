@@ -219,7 +219,20 @@ export const preferences = pgTable("preferences", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const feedbackTypeEnum = pgEnum('feedback_type', ['like', 'dislike']);
+export const pref = pgTable("pref", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  genres: text("genres").notNull(),
+  languages: text("languages").notNull(),
+  mood_tags: text("mood_tags").notNull(),
+  age_rating: text("age_rating").notNull(),
+  embedding: vector("embedding", { dimensions: 1536 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+
+
+export const feedbackTypeEnum = pgEnum('feedback_type', ['like', 'dislike', 'none']);
 
 export const movieFeedback = pgTable("movie_feedback", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -233,3 +246,19 @@ export const movieFeedback = pgTable("movie_feedback", {
   index("idx_movie").on(table.movie_id),
   index("idx_feedback").on(table.feedback_type),
 ]);
+
+// db/schema.ts
+export const notifications = pgTable("notifications", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  read: boolean("read").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const fcmTokens = pgTable("fcmtokens", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  user_id: uuid("user_id").notNull().references(() => registrations.id, { onDelete: "cascade" }),
+  token: text("token").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});

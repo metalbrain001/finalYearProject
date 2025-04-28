@@ -16,11 +16,13 @@ export const recommendMoviesByVector = async (
     throw new Error("Embedding is empty or invalid after sanitization.");
   }
 
+  // Ensure the embedding is a valid vector
   const embeddingLiteral = `'[${sanitizedEmbedding.join(",")}]'::vector`;
   if (embeddingLiteral.length === 0) {
     throw new Error("Embedding is empty or invalid after sanitization.");
   }
 
+  // ✅ 1. Fetch movies with embedding
   const availableMovies = await drizzledb
     .select({
       id: coreMovie.id,
@@ -39,7 +41,7 @@ export const recommendMoviesByVector = async (
         excludeMovieIds.length ? not(inArray(coreMovie.id, excludeMovieIds)) : undefined
       )
     )
-    .limit(200); // Pull more to sort by similarity manually
+    .limit(500); // Pull more to sort by similarity manually
 
   // manually calculate cosine similarity
   const calculateSimilarity = (v1: number[], v2: number[]) => {
@@ -49,6 +51,7 @@ export const recommendMoviesByVector = async (
     return dot / (norm1 * norm2 || 1);
   };
 
+  // ✅ 2. Calculate similarity and sort
   const moviesWithSimilarity = availableMovies
     .map((movie) => {
       const sim = calculateSimilarity(sanitizedEmbedding, movie.embedding || []);

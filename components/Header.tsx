@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,9 +10,12 @@ import SearchInput from "./SearchInput";
 import GenreMenu from "./GenreMenu";
 import ProfileMenu from "./ProfileMenu";
 import RecommenderMenu from "./RecommenderMenu";
+import Notifications from "./Notifications";
+import { ThemeToggle } from "./resources/ToggleThemes";
 
 const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
+
   return (
     <header className="my-10 flex justify-between px-4 md:px-10 gap-10">
       <Link href="/">
@@ -44,8 +48,14 @@ const Header = ({ session }: { session: Session }) => {
         <li>
           <GenreMenu />
         </li>
+        <li>
+          <Notifications />
+        </li>
         <li className="flex items-center gap-2">
           <ProfileMenu session={session} />
+        </li>
+        <li>
+          <ThemeToggle />
         </li>
       </ul>
     </header>

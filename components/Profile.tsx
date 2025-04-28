@@ -75,14 +75,6 @@ const Profile = () => {
       {rentedMovies?.length > 0 && (
         <VectorRecommendation userId={String(session?.user?.id)} />
       )}
-      {/* ✅ Recommendations */}
-      {/* {rentedMovies?.length > 0 ? (
-        <RecommendedMovies userId={String(session?.user?.id)} />
-      ) : (
-        <p className="text-gray-400 mt-6">
-          Rent a few movies to see personalized recommendations here 📽️
-        </p>
-      )} */}
       <LLMChatWindow />
     </section>
   );

@@ -3,7 +3,7 @@
 import React from "react";
 import { useGetRentedMovies } from "@/hooks/use-getrentedmv";
 import { useSession } from "next-auth/react";
-import { daysUntilDue, formattedDate } from "@/lib/utils";
+import { daysUntilDue, formattedDate, getMovieStatus } from "@/lib/utils";
 
 const UserRentedMovies = () => {
   const { data: session } = useSession();
@@ -47,15 +47,16 @@ const UserRentedMovies = () => {
               <h3 className="text-sm font-semibold mt-2 text-white truncate">
                 {movie.movie_title}
               </h3>
-
               <p
                 className={`text-xs font-medium mt-1 px-2 py-1 rounded-full text-center ${
-                  movie.status === "rented"
+                  getMovieStatus(movie) === "Currently Rented"
                     ? "bg-yellow-500 text-black"
+                    : getMovieStatus(movie) === "Overdue"
+                    ? "bg-red-500 text-white"
                     : "bg-green-500 text-black"
                 }`}
               >
-                {movie.status === "rented" ? "Currently Rented" : "Returned"}
+                {getMovieStatus(movie)}
               </p>
             </div>
           ))}

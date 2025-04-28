@@ -97,7 +97,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Title"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Movie Title
               </FormLabel>
               <FormControl>
@@ -118,7 +118,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Genre"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Genre
               </FormLabel>
               <FormControl>
@@ -139,7 +139,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Year"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Movie Year
               </FormLabel>
               <FormControl>
@@ -162,7 +162,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Director"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Director
               </FormLabel>
               <FormControl>
@@ -183,7 +183,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Plot"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Movie Plot
               </FormLabel>
               <FormControl>
@@ -205,7 +205,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel
-                className="text-base font-normal text-dark-4"
+                className="text-base font-normal text-white"
                 id="poster_path"
               >
                 Movie Poster
@@ -231,7 +231,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel
-                className="text-base font-normal text-dark-4"
+                className="text-base font-normal text-white"
                 htmlFor="video_path"
               >
                 Movie Trailer
@@ -256,7 +256,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
               <FormLabel
-                className="text-base font-normal text-dark-4"
+                className="text-base font-normal text-white"
                 htmlFor="poster_color"
               >
                 Primary Color
@@ -276,7 +276,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Runtime"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Movie Runtime
               </FormLabel>
               <FormControl>
@@ -300,7 +300,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Actors"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Actors
               </FormLabel>
               <FormControl>
@@ -328,7 +328,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
                 name={`Cast.${index}.name`}
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-base font-poppins font-normal text-dark-3">
+                    <FormLabel className="text-base font-poppins font-normal text-white">
                       Cast Name
                     </FormLabel>
                     <FormControl>
@@ -349,7 +349,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
                 name={`Cast.${index}.image`}
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-base font-poppins font-normal text-dark-500">
+                    <FormLabel className="text-base font-poppins font-normal text-white">
                       Cast Image
                     </FormLabel>
                     <FormControl>
@@ -395,7 +395,7 @@ const MovieForm = ({ type, ...movies }: Props) => {
           name={"Description"}
           render={({ field }) => (
             <FormItem className="flex flex-col gap-1">
-              <FormLabel className="text-base font-normal text-dark-4">
+              <FormLabel className="text-base font-normal text-white">
                 Movie Description
               </FormLabel>
               <FormControl>

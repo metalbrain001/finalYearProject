@@ -1,10 +1,10 @@
-// lib/actions/getMoviesByGenre.ts
 "use server";
 
 import { drizzledb } from "@/db/drizzle";
-import { coreMovie } from "@/db/schema";
+import { coreMovie, rentedMovies } from "@/db/schema";
 import { ilike, desc } from "drizzle-orm";
 import { fetchPosterFromTMDB } from "@/lib/metadata";
+import { eq, sql } from "drizzle-orm";
 
 export const getMoviesByGenre = async (
   genre: string,
@@ -33,11 +33,13 @@ export const getMoviesByGenre = async (
       .offset(offset)
       .execute();
 
-    const countResult = await drizzledb.execute(
-      `SELECT COUNT(*)::int AS total FROM core_movie WHERE genres ILIKE '%${genre}%'`
-    );
+    const [{ total }] = await drizzledb
+      .select({ total: sql<number>`COUNT(*)` })
+      .from(coreMovie)
+      .where(ilike(coreMovie.genres, `%${genre}%`))
+      .execute();
 
-    const totalMovies: number = (countResult.rows[0] as { total: number })?.total || 0;
+    const totalMovies: number = (total.toString() as unknown) as number;
     const totalPages = Math.ceil(totalMovies / limit);
 
     const movies = await Promise.all(

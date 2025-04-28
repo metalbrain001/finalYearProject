@@ -12,7 +12,7 @@ const page = () => {
           Go Back
         </Link>
       </Button>
-      <section className="w-full rounded-2xl bg-white p-7">
+      <section className="w-full rounded-2xl bg-dashboard p-7">
         <MovieForm
           type="create"
           title=""

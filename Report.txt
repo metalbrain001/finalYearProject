@@ -1,2 +1,27 @@
 Vector Embedding.
 
+ Recommendation Strategy Options
+Option 1: Genre-Based Recommendations
+Look at genres of movies the user liked.
+
+Recommend unseen movies with similar genres.
+
+Option 2: Embedding-Based (Vector Similarity)
+For liked or highly rated rented movies, use the embedding vector to find nearest neighbors (most similar movies).
+
+Quick Win: Genre-Based Recommendations
+Let’s implement a SQL + TypeScript-based version for this now.
+
+Step 3: Recommend unseen movies with matching genres
+
+Updated Strategy:
+Pull the most recent liked movie (from movie_feedback)
+
+Get its embedding from rented_movies
+
+Use that embedding to call recommendMoviesByVector()
+
+Filter out already liked/disliked movies by this user
+
+
+

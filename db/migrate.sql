@@ -87,3 +87,7 @@ CREATE TABLE movie_feedback (
     CONSTRAINT unique_feedback_per_user UNIQUE (user_id, movie_id)
 );
 
+UPDATE registrations
+SET role = 'superadmin'
+WHERE id = '9b70c59b-0d45-405a-959f-1800fc97981a';
+

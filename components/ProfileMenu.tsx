@@ -32,7 +32,7 @@ const ProfileMenu = ({ session }: { session: Session }) => {
           <div className="flex items-center gap-2">
             <ul className="flex flex-row items-center gap-8">
               <li className="flex items-center gap-2">
-                <Link href="/my-profile">
+                <Link href="/my-account/profile">
                   <Avatar className="w-28 h-28">
                     <AvatarFallback className="bg-amber-100 rounded-full font-semibold text-amber-500 text-2xl">
                       {getInitials(session?.user?.name || "IN")}

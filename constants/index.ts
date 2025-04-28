@@ -15,33 +15,45 @@ export const navigationLinks = [
 export const adminSideBarLinks = [
   {
     img: "/icons/admin/home.svg",
-    route: "/admin",
+    route: "/dashboard",
     text: "Home",
+    roles: ["user", "admin", "superadmin"],
   },
   {
     img: "/icons/admin/users.svg",
-    route: "/admin/users",
-    text: "All Users",
+    route: "/dashboard/admin/users",
+    text: "Manage Users",
+    roles: ["user", "admin", "superadmin"],
   },
   {
     img: "/icons/admin/film.svg",
-    route: "/admin/movies",
-    text: "All Movies",
+    route: "/dashboard/movies",
+    text: "Manage Movies",
+    roles: ["user", "admin", "superadmin"],
   },
   {
     img: "/icons/admin/bookmark.svg",
-    route: "/admin/movies-requests",
+    route: "/dashboard/movies-requests",
     text: "Rent Requests",
+    roles: ["user", "admin", "superadmin"],
   },
   {
     img: "/icons/admin/user.svg",
-    route: "/admin/account-requests",
+    route: "/dashboard/account-requests",
     text: "Account Requests",
+    roles: ["user", "admin", "superadmin"],
+  },
+  {
+    img: "/icons/admin/send.svg",
+    route: "/dashboard/admin/send-notification",
+    text: "Send Notification",
+    roles: ["user", "admin", "superadmin"],
   },
   {
     img: "/icons/admin/app.svg",
     route: "/",
     text: "Back to App",
+    roles: ["user", "admin", "superadmin"],
   },
 ];
 
@@ -93,6 +105,16 @@ export const PREFERENCE_FIELD_TYPES = {
   watch_frequency: "text",
 };
 
+export const FCM_FIELD_NAMES = {
+  title: "Title",
+  message: "Message",
+};
+
+export const FCM_FIELD_TYPES = {
+  title: "text",
+  message: "text",
+};
+
 export const genreOptions = [
   "Action",
   "Drama",
@@ -102,6 +124,10 @@ export const genreOptions = [
   "Sci-Fi",
 ];
 export const languageOptions = ["English", "Spanish", "French", "Hindi", "Korean"];
+
+export const ageRatingOptions = ["G", "PG", "PG-13", "R"];
+
+export const mood_tagOptions = ["Thriller", "Comedy", "Romance", "Action", "Drama"];
 
 export const placeholder = {
   actors: "Leonardo DiCaprio, Tom Hanks",
@@ -161,10 +187,8 @@ export const genres = [
 export const defaultPoster = `https://fakeimg.pl/350x500/?text=Poster&font=lobster`;
 
 export const profileOptions = [
-  { label: "My Profile", href: "/my-account/profile" },
-  { label: "My WatchList", href: "/my-watchlist" },
-  { label: "Settings", href: "/settings" },
-  { label: "Admin", href: "/admin" },
+  { label: "Profile", href: "/my-account/profile" },
+  { label: "Dashboard", href: "/dashboard/" },
 ];
 
 export const recommendationOptions = [
@@ -234,4 +258,14 @@ export const userSideBarLinks = [
 export enum FeedbackTypeEnum {
   Like = 'like',
   Dislike = 'dislike',
+  None = 'none',
 }
+
+export const likedGenres = [
+  "Drama",
+  "Crime",
+  "Thriller",
+  "Comedy",
+  "Family",
+  "Romance",
+];

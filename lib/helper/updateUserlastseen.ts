@@ -1,6 +1,6 @@
 // Update the user's last seen when they visit the site helper function
-import { registrations } from "@/db/schema";
 import { drizzledb } from "@/db/drizzle";
+import { registrations } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 // get the user and see if the last activity is today

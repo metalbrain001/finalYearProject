@@ -59,7 +59,7 @@ const UserCard = ({
   };
 
   return (
-    <div className="bg-white border-b-gray-600 shadow-lg rounded-lg p-4">
+    <div className="bg-user-surface border border-user-border shadow-lg rounded-xl p-4 transition hover:shadow-2xl hover:scale-[1.01]">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <img
@@ -68,14 +68,14 @@ const UserCard = ({
             alt=""
           />
           <div className="ml-2">
-            <p className="text-lg font-semibold text-gray-800">{fullName}</p>
-            <p className="text-sm font-semibold text-gray-600">@{username}</p>
+            <p className="text-lg font-semibold text-gray-200">{fullName}</p>
+            <p className="text-sm font-semibold text-gray-200">@{username}</p>
           </div>
         </div>
 
         {/* ✅ Use roleOptions instead of raw strings */}
         <select
-          className="border-dark-2 text-dark-1 bg-gray-200 p-1 rounded"
+          className="text-white bg-gray-900 p-1 rounded"
           value={selectedRole}
           onChange={handleRoleChange}
           disabled={loading}
@@ -90,8 +90,8 @@ const UserCard = ({
       </div>
 
       <div className="mt-4">
-        <p className="text-sm text-gray-700">{email}</p>
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-200">{email}</p>
+        <p className="text-sm text-gray-200">
           {selectedRole !== "superadmin" &&
             selectedRole !== "admin" &&
             `Joined on ${createdAt}`}
@@ -100,7 +100,7 @@ const UserCard = ({
 
       <div className="mt-4 flex justify-end">
         <Button
-          className="text-sm bg-red font-semibold text-white"
+          className="text-sm bg-blue-950 font-semibold text-white"
           onClick={() => handleDelete()}
           disabled={loading}
         >

@@ -62,6 +62,7 @@ export interface MovieDetails {
   cast: CastCardProps[];
   videoKey: string;
   videoTitle: string;
+  feedback_type?: string;
 }
 
 interface Genre {
@@ -306,6 +307,17 @@ export interface Preferences {
   createdAt: Date;
 }
 
+export interface Pref {
+  id: string;
+  user_id: string;
+  genres: string;
+  languages: string;
+  mood_tags: string;
+  age_rating: string;
+  embedding: number[];
+  createdAt: Date;
+}
+
 export interface OnboardingData {
   genres: string[];
   actors: string[];
@@ -347,3 +359,52 @@ export enum FeedbackTypeEnum {
 type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
 
 export const imageKitUrl = "https://ik.imagekit.io/metalbrainimage";
+
+export const firebase_message_payload = {
+  "data": {
+    "title": "Hello",
+    "body": "World",
+    "image": "https://example.com/image.png",
+    "click_action": "https://example.com"
+  }
+}
+
+export interface ChartDataset {
+  label: string;
+  data: number[];
+  backgroundColor: string;
+  borderColor: string;
+  borderWidth: number;
+}
+
+export interface ChartData {
+  labels: string[];
+  datasets: ChartDataset[];
+}
+
+export interface DashboardChartCardProps {
+  title: string;
+  chartType: "bar" | "line" | "area" | "pie";
+  data: ChartData;
+  options?: Record<string, any>;
+}
+
+export interface DashboardStatsCardProps {
+  totalMovies: number;
+  totalUsers: number;
+  topMovie: {
+    title: string;
+    count: number;
+  };
+  totalRegisteredUsers: number;
+}
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  content: string;
+  read: boolean;
+  createdAt: string;
+}
+
+export type AllowedRoles = "user" | "admin" | "superadmin" | "null";

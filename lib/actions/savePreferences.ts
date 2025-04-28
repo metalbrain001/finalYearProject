@@ -2,24 +2,24 @@
 
 // lib/actions/savePreferences.ts
 import { drizzledb } from "@/db/drizzle";
-import { preferences } from "@/db/schema";
-import { Preferences } from "@/types";
+import { pref } from "@/db/schema";
+import { Pref } from "@/types";
 import { eq } from "drizzle-orm";
 
-export async function savePreferences(data: Omit<Preferences, "id" | "createdAt">) {
+export async function savePreferences(data: Omit<Pref, "id" | "createdAt">) {
   const existing = await drizzledb
     .select()
-    .from(preferences)
-    .where(eq(preferences.user_id, data.user_id));
+    .from(pref)
+    .where(eq(pref.user_id, data.user_id));
 
   if (existing.length > 0) {
     // Optional: update instead of insert
     await drizzledb
-      .update(preferences)
+      .update(pref)
       .set({ ...data })
-      .where(eq(preferences.user_id, data.user_id));
+      .where(eq(pref.user_id, data.user_id));
   } else {
-    await drizzledb.insert(preferences).values({
+    await drizzledb.insert(pref).values({
       ...data,
     });
   }

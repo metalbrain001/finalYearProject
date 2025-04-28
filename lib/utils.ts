@@ -33,6 +33,20 @@ export const daysUntilDue = (dueDate: string) => {
   return diff >= 0 ? `${diff} day(s) left` : `Overdue by ${Math.abs(diff)} day(s)`;
 };
 
+export const getMovieStatus = (movie: any) => {
+  const now = new Date();
+  const dueDate = new Date(movie.dueDate);
+
+  if (movie.status === "returned") return "Returned";
+  if (dueDate < now) return "Overdue";
+  return "Currently Rented";
+};
+export const getMoviePosterUrl = (posterPath: string) => {
+  return posterPath
+    ? `https://image.tmdb.org/t/p/w500${posterPath}`
+    : "https://via.placeholder.com/500x750?text=No+Image+Available";
+};
+
 export const fetchMovieMetadata = async (tmdbId: string) => {
   const apiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY || "";
   const baseUrl = "https://api.themoviedb.org/3";

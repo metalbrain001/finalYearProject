@@ -1,7 +1,7 @@
 "use server";
 
 import { drizzledb } from "@/db/drizzle";
-import { registrations, watchlist } from "@/db/schema";
+import { registrations, notifications } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 // ✅ Fetch all users
@@ -65,6 +65,40 @@ export const deleteUser = async (requesterId: string, userId: string) => {
   } catch (error) {
     console.error("🚨 Error deleting user:", error);
     return { success: false, message: "Error deleting user." };
+  }
+};
+
+// send notification to user
+export const sendNotification = async (userId: string, message: string) => {
+  try {
+    // Fetch user's email
+    const user = await drizzledb
+      .select({ email: registrations.email })
+      .from(registrations)
+      .where(eq(registrations.id, userId))
+      .execute();
+
+    // Send email notification
+    console.log(`📧 Sending notification to ${user[0].email}: ${message}`);
+    return { success: true, message: "Notification sent successfully." };
+  } catch (error) {
+    console.error("🚨 Error sending notification:", error);
+    return { success: false, message: "Error sending notification." };
+  }
+};
+
+// mark notification as read
+export const markNotificationAsRead = async (notificationId: string) => {
+  try {
+    await drizzledb
+      .update(notifications)
+      .set({ read: true })
+      .where(eq(notifications.id, notificationId))
+      .execute();
+    return { success: true, message: "Notification marked as read." };
+  } catch (error) {
+    console.error("🚨 Error marking notification as read:", error);
+    return { success: false, message: "Error marking notification as read." };
   }
 };
 

@@ -47,6 +47,7 @@ const AuthForm = <T extends FieldValues>({
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
     const result = await onSubmit(data);
+    console.log("🔥 Submission result:", result);
     if (result && result.success) {
       toast(`Success ${isSignIn ? "signing in" : "signing up"}`, {
         description: "You have successfully signed in.",

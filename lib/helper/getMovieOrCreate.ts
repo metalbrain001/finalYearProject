@@ -39,7 +39,7 @@ export const getOrCreateMovieId = async (tmdbId: number, metadata: MovieMetaData
     .insert(coreMovie)
     .values({
       movieId: Number(tmdbId),
-      createdAt: new Date(), // Replace new Date() with the appropriate value
+      createdAt: new Date(),
       userId: Number(userId),
       ...metadata,
       tmdbId,

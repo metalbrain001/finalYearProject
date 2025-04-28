@@ -17,6 +17,7 @@ import {
   Plus,
   BotMessageSquare,
   ThumbsUp,
+  Bell,
 } from "lucide-react";
 import { JSX } from "react";
 
@@ -68,6 +69,7 @@ const Icons = (): IconComponents => {
     BotMessageSquare: (props) => (
       <BotMessageSquare {...defaultProps} {...props} />
     ),
+    Bell: (props) => <Bell {...defaultProps} {...props} />,
   };
 };
 

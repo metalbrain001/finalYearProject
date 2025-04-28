@@ -1,9 +1,3 @@
-import ChatBot from "@/components/ChatBot";
-import GenreSectionWithPagination from "@/components/GenreSecPag";
-import GenreSection from "@/components/GenreSection";
-import MovieList from "@/components/MovieList";
-import TopRatedMovies from "@/components/MovieSegment";
-import UploadedMoviesList from "@/components/UploadedMvList";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { after } from "next/server";

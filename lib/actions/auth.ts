@@ -65,12 +65,12 @@ export const signUp = async (params: AuthCredentials) => {
     .where(eq(registrations.email, email))
     .execute();
   if (existingUser.length > 0) {
-    return { success: false, error: "" };
+    return { success: false, error: "Email already registered" };
   }
 
   const hashedPassword = await hash(password, 10);
   if (!hashedPassword) {
-    return { success: false, error: "" };
+    return { success: false, error: "Failed to hash password" };
   }
 
   try {
@@ -98,12 +98,13 @@ export const signUp = async (params: AuthCredentials) => {
     });
 
     await signInWithCredentials({ email, password });
-    return { success: true, error: "" };
+    return { success: true, error: "Failed to create registration" };
   } catch (error) {
+    console.error("Signup Error:", error);
     if (error instanceof Error) {
-      return { success: true, error: "" };
+      return { success: false, error: error.message || "Sign-Up Failed" };
     } else {
-      return { success: true, error: "" };
+      return { success: false, error: "Unknown sign-up error" };
     }
   }
 };

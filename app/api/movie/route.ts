@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { drizzledb } from "@/db/drizzle";
+import { db } from "@/database/drizzle";
 import { coreMovie } from "@/database/schema";
 import { eq, sql } from "drizzle-orm";
 
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     const offset = (page - 1) * limit;
 
     // ✅ Fetch movies with the enforced max limit
-    const movies = await drizzledb
+    const movies = await db
       .select({
         id: coreMovie.id,
         movieId: coreMovie.movieId,
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
 
 
     // ✅ Fetch total movie count for pagination
-    const totalMovies = await drizzledb
+    const totalMovies = await db
       .select({ count: sql<number>`COUNT(*)` })
       .from(coreMovie)
       .execute();

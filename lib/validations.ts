@@ -1,3 +1,4 @@
+import { title } from "process";
 import { z } from "zod";
 
 export const signupSchema = z.object({
@@ -50,12 +51,21 @@ export const myAccountSchema = z.object({
 export const onboardingSchema = z.object({
   genres: z.array(z.string()).min(1, "Select at least one genre"),
   languages: z.array(z.string()).min(1, "Select at least one language"),
-  actors: z.string().optional(),
-  directors: z.string().optional(),
-  content_types: z.string().optional(),
-  mood_tags: z.string().optional(),
+  mood_tags: z.array(z.string()).optional(),
   age_rating: z.string().optional(),
-  preferred_duration: z.string().optional(),
-  interest_keywords: z.string().optional(),
-  watch_frequency: z.string().optional(),
 });
+
+export const fcmSchema = z.object({
+  token: z.string(),
+  title: z.string(),
+  message: z.string(),
+});
+
+export const toggleSchema = z.object({
+  user_id: z.string().uuid(),
+  movie_id: z.number().int(),
+  imdb_id: z.string().min(1),
+  currentFeedbackType: z.enum(["like", "dislike", "none"]).optional(),
+  newFeedbackType: z.enum(["like", "dislike"]),
+});
+

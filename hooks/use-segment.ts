@@ -28,26 +28,6 @@ const useMovieSegment = (segment: "topRated" | "recentRelease" | string) => {
       }
     };
 
-    // useEffect(() => {
-    //   const fetchMovies = async () => {
-    //     setLoading(true);
-    //     try {
-    //       const response = await fetch(`/api/movie/segment`);
-    //       const json = await response.json();
-
-    //       if (!json.success || !json.data || !json.data[segment]) {
-    //         throw new Error("No movies found for this segment.");
-    //       }
-
-    //       setMovies(json.data[segment]);
-    //       console.log("🎬 Movies:", json.data[segment]);
-    //     } catch (error: any) {
-    //       setError(error.message || "Failed to load movies");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
-
     fetchMovies();
   }, [segment]);
 

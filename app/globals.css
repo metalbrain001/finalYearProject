@@ -523,6 +523,11 @@
   }
 
   /* Button */
+
+  .create_movie_btn {
+    @apply bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-200 transition-all duration-300 shadow-md !important;
+  }
+
   .shad-button_primary {
     @apply bg-primary-500 hover:bg-primary-500 text-light-7 flex gap-2 !important;
   }
@@ -618,6 +623,10 @@
       @apply min-h-14 w-full bg-primary-600 hover:bg-primary-600/95 !important;
     }
 
+    .movie-form_input {
+      @apply bg-transparent border border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-0 rounded-lg px-4 py-2 !important;
+    }
+
     .movie-overview_btn {
       @apply min-h-14 w-[40%] bg-primary-500 hover:bg-primary-500/95 mt-6 !important;
     }
@@ -630,6 +639,11 @@
   }
 
   @layer components {
+
+    .admin-container {
+      @apply flex flex-col gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar;
+    }
+
     .chatbot-container {
       @apply fixed bottom-16 right-4 bg-gray-200 w-96 mr-10 max-w-full shadow-lg rounded-lg overflow-hidden z-50 flex flex-col;
     }
@@ -677,6 +691,34 @@
 
   body {
     @apply bg-dark-1 text-light-1;
+  }
+}
+
+@layer dashboard {
+  ::-webkit-scrollbar {
+    @apply w-10;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-dark-4 rounded-lg;
+  }
+
+  ::-webkit-scrollbar-thumb:horizontal {
+    @apply bg-dark-4 rounded-lg;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-3;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-dark-2;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-3;
   }
 }
 
