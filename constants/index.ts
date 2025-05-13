@@ -189,7 +189,56 @@ export const defaultPoster = `https://fakeimg.pl/350x500/?text=Poster&font=lobst
 export const profileOptions = [
   { label: "Profile", href: "/my-account/profile" },
   { label: "Dashboard", href: "/dashboard/" },
+  { label: "About", href: "/about" }
 ];
+
+export const openSourceLogos = [
+  {
+    name: "Next.js",
+    logo: "/images/nextjs.svg",
+    desc: "Fullstack React framework for frontend and API handling.",
+    href: "https://nextjs.org/",
+  },
+  {
+    name: "FastAPI",
+    logo: "/images/fastapi.svg",
+    desc: "Python framework for high-performance API serving of ML models.",
+    href: "https://fastapi.tiangolo.com/",
+  },
+  {
+    name: "scikit-learn",
+    logo: "/images/scikit-learn.svg",
+    desc: "Used for training collaborative and content-based recommendation models.",
+    href: "https://scikit-learn.org/stable/",
+  },
+  {
+    name: "Docker",
+    logo: "/images/docker.svg",
+    desc: "Containerization of FastAPI server for portable ML inference.",
+    href: "https://www.docker.com/",
+  },
+  {
+    name: "PostgreSQL",
+    logo: "/images/postgresql.svg",
+    desc: "Relational database for structured movie and user data.",
+    href: "https://www.postgresql.org/",
+  },
+  {
+    name: "Neon",
+    logo: "/images/color.png",
+    desc: "Serverless Postgres used for scalable and cost-effective deployments.",
+    href: "https://neon.tech/",
+  },
+  {
+    name: "Tailwind CSS",
+    logo: "/images/tailwindcss.svg",
+    desc: "Utility-first CSS framework used for styling the user interface.",
+    href: "https://tailwindcss.com/",
+  },
+];
+
+
+
 
 export const recommendationOptions = [
   { label: "Recommended", value: "/recommended" },

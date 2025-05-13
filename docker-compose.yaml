@@ -1,0 +1,9 @@
+services:
+  recommender-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: recommender-service
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

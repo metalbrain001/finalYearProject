@@ -73,7 +73,6 @@ const ChatBot = () => {
           </motion.div>
         )}
       </motion.div>
-
       {/* ✅ Chat Window - Show when chat is open */}
       {isOpen && (
         <div className="chatbot_window">

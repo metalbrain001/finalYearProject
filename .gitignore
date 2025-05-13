@@ -47,3 +47,15 @@ firebase.json
 service_key.json
 
 certificates
+
+LLM/
+# LLM
+/LLM/*.csv
+/LLM/data/*.csv
+/LLM/*.json
+LLM/*.venv
+LLM/*.txt
+LLM/*.yaml
+LLM/*.yml
+
+.dockerignore

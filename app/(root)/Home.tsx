@@ -6,6 +6,7 @@ import MovieList from "@/components/MovieList";
 import TopRatedMovies from "@/components/MovieSegment";
 import UploadedMoviesList from "@/components/UploadedMvList";
 import { hasPreferences } from "@/lib/helper/checkUserPreferences";
+import Footer from "@/components/Footer";
 
 const Home = () => {
   return (
@@ -17,6 +18,9 @@ const Home = () => {
       {/* <TopRatedMovies /> */}
       {/* <MovieList /> */}
       <ChatBot />
+      <div className="mt-20">
+        <Footer />
+      </div>
     </>
   );
 };
